@@ -46,14 +46,16 @@ public class RegisterFragment extends Fragment {
                 return;
             }
             //Check if passwords match
-            if (!password.equals(confirmPassword)) {
+            else if (!password.equals(confirmPassword)) {
                 Toast.makeText(getContext(), "Passwords do not match", Toast.LENGTH_SHORT).show();
                 return;
             }
-            Toast.makeText(getContext(), "Account Created for: " + email, Toast.LENGTH_SHORT).show();
-
-            NavHostFragment.findNavController(RegisterFragment.this)
-                    .navigate(R.id.action_registerFragment_to_loginFragment);
+            else {
+                MainActivity mainActivity = (MainActivity) getActivity();
+                if(mainActivity!=null){
+                    mainActivity.register(email, password);
+                }
+            }
         });
     }
 }

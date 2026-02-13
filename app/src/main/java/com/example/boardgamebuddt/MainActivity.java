@@ -54,6 +54,9 @@ public class MainActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
+                            Toast.makeText(MainActivity.this, "Registration Successful", Toast.LENGTH_LONG).show();
+                            NavHostFragment navfragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView);
+                            navfragment.getNavController().navigate(R.id.action_registerFragment_to_loginFragment);
 
                         } else {
                             // If sign in fails, display a message to the user.
