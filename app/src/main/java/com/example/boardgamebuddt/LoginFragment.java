@@ -46,8 +46,10 @@ public class LoginFragment extends Fragment {
             if (email.isEmpty() || password.isEmpty()) {
                 Toast.makeText(getContext(), "Please fill all fields", Toast.LENGTH_SHORT).show();
             } else {
-                // TODO: Add Firebase login logic here
-                Toast.makeText(getContext(), "Login clicked for: " + email, Toast.LENGTH_SHORT).show();
+                MainActivity mainActivity = (MainActivity) getActivity();
+                if (mainActivity != null) {
+                    mainActivity.login(email, password);
+                }
             }
         });
 
