@@ -33,43 +33,109 @@ public class Game {
         this.playCount = 0;
         this.rulesNote = "";
     }
-    //Getters and Setters for FirebaseId
-    public String getFirebaseId() {return firebaseId;}
-    public void setFirebaseId(String firebaseId) {this.firebaseId = firebaseId;}
+    //setters
+    public void setFirebaseId(String firebaseId) {
+        this.firebaseId = firebaseId;
+    }
 
-    public String getName() {return name;}
-    public void setName(String name) {this.name = name;}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-    public int getMinPlayers() {return minPlayers;}
-    public void setMinPlayers(int minPlayers) {this.minPlayers = minPlayers;}
+    public void setMinPlayers(int minPlayers) {
+        this.minPlayers = minPlayers;
+    }
 
-    public  int getMaxPlayers() {return maxPlayers;}
-    public void setMaxPlayers(int maxPlayers) {this.maxPlayers = maxPlayers;}
+    public void setMaxPlayers(int maxPlayers) {
+        this.maxPlayers = maxPlayers;
+    }
 
-    public  int getAvgPlayTime() {return avgPlayTime;}
-    public void setAvgPlayTime (int avgPlayTime) {this.avgPlayTime = avgPlayTime;}
+    public void setAvgPlayTime(int avgPlayTime) {
+        this.avgPlayTime = avgPlayTime;
+    }
 
-    public int getDifficulty() {return difficulty;}
-    public void setDifficulty(int difficulty) {this.difficulty = difficulty;}
+    public void setDifficulty(int difficulty) {
+        this.difficulty = difficulty;
+    }
 
-    public String getCategory() {return category;}
-    public void setCategory(String category) {this.category = category;}
+    public void setCategory(String category) {
+        this.category = category;
+    }
 
-    public String getLearningStatus() {return learningStatus;}
-    public void setLearningStatus(String learningStatus) {this.learningStatus = learningStatus;}
+    public void setLearningStatus(String learningStatus) {
+        this.learningStatus = learningStatus;
+    }
 
-    public  boolean getIsBorrowed() {return isBorrowed;}
-    public void setIsBorrowed(boolean isBorrowed) {this.isBorrowed = isBorrowed;}
+    public void setBorrowed(boolean borrowed) {
+        isBorrowed = borrowed;
+    }
 
-    public  boolean getIsUnplayed() {return isUnplayed;}
-    public void setIsUnplayed(boolean isUnplayed) {this.isUnplayed = isUnplayed;}
+    public void setUnplayed(boolean unplayed) {
+        isUnplayed = unplayed;
+    }
 
-    public int getTotalPlayTime() {return totalPlayTime;}
-    public void setTotalPlayTime(int totalPlayTime) {this.totalPlayTime = totalPlayTime;}
+    public void setTotalPlayTime(int totalPlayTime) {
+        this.totalPlayTime = totalPlayTime;
+    }
 
-    public int getPlayCount() {return playCount;}
-    public void setPlayCount(int playCount) {this.playCount = playCount;}
+    public void setPlayCount(int playCount) {
+        this.playCount = playCount;
+    }
 
-    public String getRulesNote() {return rulesNote;}
-    public void setRulesNote(String rulesNote) {this.rulesNote = rulesNote;}
+    public void setRulesNote(String rulesNote) {
+        this.rulesNote = rulesNote;
+    }
+    //Getters
+
+    public String getFirebaseId() {
+        return firebaseId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getMinPlayers() {
+        return minPlayers;
+    }
+
+    public int getMaxPlayers() {
+        return maxPlayers;
+    }
+
+    public int getAvgPlayTime() {
+        return avgPlayTime;
+    }
+
+    public int getDifficulty() {
+        return difficulty;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public String getLearningStatus() {
+        return learningStatus;
+    }
+
+    public boolean isBorrowed() {
+        return isBorrowed;
+    }
+
+    public boolean isUnplayed() {
+        return isUnplayed;
+    }
+
+    public int getTotalPlayTime() {
+        return totalPlayTime;
+    }
+
+    public int getPlayCount() {
+        return playCount;
+    }
+
+    public String getRulesNote() {
+        return rulesNote;
+    }
 }
