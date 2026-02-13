@@ -51,10 +51,7 @@ public class LoginFragment extends Fragment {
             }
         });
 
-        // Set up the register text click listener to navigate
         tvRegister.setOnClickListener(v -> {
-            // This will navigate to your RegisterFragment
-            // Make sure you have an action in your nav_graph.xml with this ID
             NavHostFragment.findNavController(LoginFragment.this)
                     .navigate(R.id.action_loginFragment_to_registerFragment);
         });
