@@ -26,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
+        // Enable disk persistence
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         setContentView(R.layout.activity_main);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -85,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
                 .getReference("users")
                 .child(uid)
                 .child("games");
+        gamesRef.keepSynced(true);
         //create a new game ID
         String gameId = gamesRef.push().getKey();
         game.setFirebaseId(gameId);
