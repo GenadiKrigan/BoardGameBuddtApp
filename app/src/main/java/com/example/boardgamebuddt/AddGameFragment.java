@@ -3,6 +3,7 @@ package com.example.boardgamebuddt;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,13 +29,26 @@ public class AddGameFragment extends Fragment {
         etDifficulty = view.findViewById(R.id.etAddDifficulty);
         etRulesNote = view.findViewById(R.id.etAddRulesNote);
         cgCategories = view.findViewById(R.id.cgCategories);
-        swAlreadyPlayed = view.findViewById(R.id.swAlreadyPlayed);
+        swAlreadyPlayed = view.findViewById(R.id.swAlreadyPlayed);//bool
         btAddGame = view.findViewById(R.id.btnAddGameSave);
         btAddGame.setOnClickListener(v -> saveGame());
     }
 
     private void saveGame() {
         String name = etName.getText().toString().trim();
+        String minPlayers = etMinPlayer.getText().toString().trim();
+        String maxPlayers = etMaxPlayer.getText().toString().trim();
+        String bestPlayers = etBestPlayer.getText().toString().trim();
+        String avgTime = etAvgTime.getText().toString().trim();
+        String difficulty = etDifficulty.getText().toString().trim();
+        if(name.isEmpty()||minPlayers.isEmpty()||maxPlayers.isEmpty()||bestPlayers.isEmpty()||avgTime.isEmpty()||difficulty.isEmpty()){
+            Toast.makeText(getContext(), "Please fill all fields", Toast.LENGTH_SHORT).show();
+        }
+        int min = Integer.parseInt(minPlayers);
+        int max = Integer.parseInt(maxPlayers);
+        int best = Integer.parseInt(bestPlayers);
+        int avg = Integer.parseInt(avgTime);
+        int diff = Integer.parseInt(difficulty);
 
     }
 }
