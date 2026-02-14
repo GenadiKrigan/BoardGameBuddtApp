@@ -11,6 +11,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.example.boardgamebuddt.models.Game;
 import com.example.boardgamebuddt.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -75,5 +76,27 @@ public class MainActivity extends AppCompatActivity {
         DatabaseReference myRef = database.getReference("users").child(uid);
         User newUser = new User(username, email, uid);
         myRef.setValue(newUser);
+    }
+    public void addGameToDB(@NonNull Game game){
+        //Get current user
+        String uid = mAuth.getCurrentUser().getUid();
+        //makes a reference to teh user DB
+        DatabaseReference gamesRef = FirebaseDatabase.getInstance()
+                .getReference("users")
+                .child(uid)
+                .child("games");
+        //create a new game ID
+        String gameId = gamesRef.push().getKey();
+        game.setFirebaseId(gameId);
+        //add game to DB
+        gamesRef.child(gameId).setValue(game)
+                .addOnCompleteListener(task -> {
+                    if(task.isSuccessful()){
+                        Toast.makeText(this, "Game added successfully!", Toast.LENGTH_LONG).show();
+                    }
+                    else{
+                        Toast.makeText(this, "Faild to add game", Toast.LENGTH_LONG).show();
+                    }
+                });
     }
 }
