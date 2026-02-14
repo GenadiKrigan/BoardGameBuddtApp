@@ -11,10 +11,13 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.example.boardgamebuddt.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
@@ -47,22 +50,30 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
     }
-    public void register(String email, String password){
+    public void register(String email, String password, String username){
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
+                            String uid = task.getResult().getUser().getUid();
+                            writeUserToDB(uid, username, email);
                             Toast.makeText(MainActivity.this, "Registration Successful", Toast.LENGTH_LONG).show();
                             NavHostFragment navfragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView);
                             navfragment.getNavController().navigate(R.id.action_registerFragment_to_loginFragment);
 
                         } else {
                             // If sign in fails, display a message to the user.
-
+                            Toast.makeText(MainActivity.this, "Registration Failed", Toast.LENGTH_LONG).show();
                         }
                     }
                 });
+    }
+    private void writeUserToDB (String uid, String username, String email){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("users").child(uid);
+        User newUser = new User(username, email, uid);
+        myRef.setValue(newUser);
     }
 }

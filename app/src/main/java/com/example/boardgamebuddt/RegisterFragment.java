@@ -15,7 +15,7 @@ import com.google.android.material.textfield.TextInputEditText;
 
 public class RegisterFragment extends Fragment {
 
-    private TextInputEditText etEmail, etPassword, etConfirmPassword;
+    private TextInputEditText etEmail, etPassword, etConfirmPassword, etUsername;
 
     public RegisterFragment() {
         // Required empty public constructor
@@ -35,13 +35,15 @@ public class RegisterFragment extends Fragment {
         etEmail = view.findViewById(R.id.etRegisterEmailText);
         etPassword = view.findViewById(R.id.etRegisterPassword);
         etConfirmPassword = view.findViewById(R.id.etConfromPassword);
+        etUsername = view.findViewById(R.id.etRegisterUsername);
         btnCreateAccount = view.findViewById(R.id.btnCreateAccount);
         btnCreateAccount.setOnClickListener(v -> {
             String email = etEmail.getText().toString().trim();
             String password = etPassword.getText().toString().trim();
             String confirmPassword = etConfirmPassword.getText().toString().trim();
+            String username = etUsername.getText().toString().trim();
             //Check for empty fields
-            if (email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
+            if (email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() || username.isEmpty()) {
                 Toast.makeText(getContext(), "Please fill all fields", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -53,7 +55,7 @@ public class RegisterFragment extends Fragment {
             else {
                 MainActivity mainActivity = (MainActivity) getActivity();
                 if(mainActivity!=null){
-                    mainActivity.register(email, password);
+                    mainActivity.register(email, password, username);
                 }
             }
         });
