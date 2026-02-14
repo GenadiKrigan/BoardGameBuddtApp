@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_loginFragment_to_gameListFragment"
             app:destination="@id/gameListFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_addGameFragment"
+            app:destination="@id/addGameFragment" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
@@ -31,4 +34,13 @@
         android:name="com.example.boardgamebuddt.GameListFragment"
         android:label="fragment_game_list"
         tools:layout="@layout/fragment_game_list" />
+    <fragment
+        android:id="@+id/addGameFragment"
+        android:name="com.example.boardgamebuddt.AddGameFragment"
+        android:label="fragment_add_game"
+        tools:layout="@layout/fragment_add_game" >
+        <action
+            android:id="@+id/action_addGameFragment_to_gameListFragment"
+            app:destination="@id/gameListFragment" />
+    </fragment>
 </navigation>

@@ -22,7 +22,7 @@ public class Game {
         this.categories = new ArrayList<>();
     }
 
-    public Game(String firebaseId, String name, int minPlayers, int maxPlayers, int bestPlayers, int avgPlayTime, int difficulty, List<String> categories, boolean alreadyPlayed){
+    public Game(String firebaseId, String name, int minPlayers, int maxPlayers, int bestPlayers, int avgPlayTime, int difficulty, List<String> categories, boolean alreadyPlayed, String rulesNote){
         this.firebaseId = firebaseId;
         this.name = name;
         this.minPlayers = minPlayers;
@@ -41,7 +41,7 @@ public class Game {
         }
         this.playCount = 0;
         this.totalPlayTime = 0;
-        this.rulesNote = "";
+        this.rulesNote = rulesNote.isEmpty() ? "" : rulesNote;
 
     }
 

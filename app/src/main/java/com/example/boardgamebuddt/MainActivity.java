@@ -93,6 +93,8 @@ public class MainActivity extends AppCompatActivity {
                 .addOnCompleteListener(task -> {
                     if(task.isSuccessful()){
                         Toast.makeText(this, "Game added successfully!", Toast.LENGTH_LONG).show();
+                        NavHostFragment navfragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView);
+                        navfragment.getNavController().navigate(R.id.action_addGameFragment_to_gameListFragment);
                     }
                     else{
                         Toast.makeText(this, "Faild to add game", Toast.LENGTH_LONG).show();
