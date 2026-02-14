@@ -1,4 +1,4 @@
-package com.example.boardgamebuddt;
+package com.example.boardgamebuddt.fragments;
 
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.example.boardgamebuddt.MainActivity;
+import com.example.boardgamebuddt.R;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class LoginFragment extends Fragment {

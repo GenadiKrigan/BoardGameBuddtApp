@@ -1,4 +1,4 @@
-package com.example.boardgamebuddt;
+package com.example.boardgamebuddt.fragments;
 
 import android.os.Bundle;
 
@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.boardgamebuddt.MainActivity;
+import com.example.boardgamebuddt.R;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class RegisterFragment extends Fragment {

@@ -1,4 +1,4 @@
-package com.example.boardgamebuddt;
+package com.example.boardgamebuddt.fragments;
 
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.boardgamebuddt.MainActivity;
+import com.example.boardgamebuddt.R;
 import com.example.boardgamebuddt.models.Game;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
