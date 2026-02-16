@@ -16,9 +16,6 @@
         <action
             android:id="@+id/action_loginFragment_to_gameListFragment"
             app:destination="@id/gameListFragment" />
-        <action
-            android:id="@+id/action_loginFragment_to_addGameFragment"
-            app:destination="@id/addGameFragment" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
