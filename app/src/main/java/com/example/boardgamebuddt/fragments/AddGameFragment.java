@@ -51,6 +51,7 @@ public class AddGameFragment extends Fragment {
         String rulesNote = etRulesNote.getText().toString().trim();
         if(name.isEmpty()||minPlayers.isEmpty()||maxPlayers.isEmpty()||avgTime.isEmpty()||difficulty.isEmpty()){
             Toast.makeText(getContext(), "Please fill all fields", Toast.LENGTH_SHORT).show();
+            return;
         }
         int min = Integer.parseInt(minPlayers);
         int max = Integer.parseInt(maxPlayers);
