@@ -37,30 +37,30 @@ public class GameListFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // 1. חיבור הרכיבים
         rvGameList = view.findViewById(R.id.rvGameList);
         pbLoading = view.findViewById(R.id.pbLoading);
 
-        // 2. הגדרת ה-RecyclerView
         rvGameList.setLayoutManager(new LinearLayoutManager(getContext()));
         gameList = new ArrayList<>();
         adapter = new GameAdapter(gameList);
         rvGameList.setAdapter(adapter);
 
-        // 3. הגדרת ההפניה ל-Firebase
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         gamesRef = FirebaseDatabase.getInstance().getReference("users").child(uid).child("games");
 
-        // דואג שהנתונים יישארו מסונכרנים גם כאן
         gamesRef.keepSynced(true);
 
         fetchGamesFromDB();
+        adapter = new GameAdapter(gameList);
+        rvGameList.setAdapter(adapter);
+
+        adapter.setOnDeleteClickListener(game -> {
+            deleteGame(game);
+        });
     }
 
     private void fetchGamesFromDB() {
         pbLoading.setVisibility(View.VISIBLE);
-
-        // שאילתה שמסדרת את המשחקים לפי שם בסדר אלפביתי
         gamesRef.orderByChild("name").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -81,5 +81,20 @@ public class GameListFragment extends Fragment {
                 Toast.makeText(getContext(), "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+    private void deleteGame(Game game) {
+        new android.app.AlertDialog.Builder(getContext())
+                .setTitle("Delete Game")
+                .setMessage("Are you sure you want to delete " + game.getName() + "?")
+                .setPositiveButton("Delete", (dialog, which) -> {
+                    // ביצוע המחיקה מ-Firebase בעזרת ה-ID הייחודי
+                    gamesRef.child(game.getFirebaseId()).removeValue()
+                            .addOnSuccessListener(aVoid ->
+                                    Toast.makeText(getContext(), "Game deleted", Toast.LENGTH_SHORT).show())
+                            .addOnFailureListener(e ->
+                                    Toast.makeText(getContext(), "Failed to delete: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
     }
 }

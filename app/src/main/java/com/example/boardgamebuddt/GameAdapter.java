@@ -3,6 +3,7 @@ package com.example.boardgamebuddt;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton; // ייבוא חדש
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,7 +14,16 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.GameViewHolder
 
     private List<Game> gameList;
 
-    // בנאי שמקבל את רשימת המשחקים
+    public interface OnGameDeleteListener {
+        void onDeleteClick(Game game);
+    }
+
+    private OnGameDeleteListener onDeleteClickListener;
+
+    public void setOnDeleteClickListener(OnGameDeleteListener listener) {
+        this.onDeleteClickListener = listener;
+    }
+
     public GameAdapter(List<Game> gameList) {
         this.gameList = gameList;
     }
@@ -29,7 +39,6 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.GameViewHolder
     @Override
     public void onBindViewHolder(@NonNull GameViewHolder holder, int position) {
         Game game = gameList.get(position);
-
         holder.tvName.setText(game.getName());
         holder.tvPlayers.setText(game.getMinPlayers() + " - " + game.getMaxPlayers() + " Players");
         holder.tvTime.setText(game.getAvgPlayTime() + " min");
@@ -41,6 +50,13 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.GameViewHolder
         } else {
             holder.tvCategories.setText("No categories");
         }
+
+        // 3. חיבור הכפתור למאזין
+        holder.btnDeleteGame.setOnClickListener(v -> {
+            if (onDeleteClickListener != null) {
+                onDeleteClickListener.onDeleteClick(game);
+            }
+        });
     }
 
     @Override
@@ -50,6 +66,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.GameViewHolder
 
     public static class GameViewHolder extends RecyclerView.ViewHolder {
         TextView tvName, tvPlayers, tvTime, tvDifficulty, tvCategories;
+        ImageButton btnDeleteGame;
 
         public GameViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -58,6 +75,8 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.GameViewHolder
             tvTime = itemView.findViewById(R.id.tvRowTime);
             tvDifficulty = itemView.findViewById(R.id.tvRowDifficulty);
             tvCategories = itemView.findViewById(R.id.tvRowCategories);
+            // 4. קישור הכפתור מה-XML
+            btnDeleteGame = itemView.findViewById(R.id.btnDeleteGame);
         }
     }
 }
