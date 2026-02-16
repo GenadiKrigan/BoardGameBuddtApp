@@ -3,7 +3,7 @@ package com.example.boardgamebuddt;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton; // ייבוא חדש
+import android.widget.ImageButton;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,12 +18,27 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.GameViewHolder
         void onDeleteClick(Game game);
     }
 
+    public interface OnGameEditListener {
+        void onEditClick(Game game);
+    }
+    public interface OnGameClickListener {
+        void onGameClick(Game game);
+    }
+
     private OnGameDeleteListener onDeleteClickListener;
+    private OnGameEditListener onEditClickListener;
+    private OnGameClickListener onGameClickListener;
 
     public void setOnDeleteClickListener(OnGameDeleteListener listener) {
         this.onDeleteClickListener = listener;
     }
 
+    public void setOnEditClickListener(OnGameEditListener listener) {
+        this.onEditClickListener = listener;
+    }
+    public void setOnGameClickListener(OnGameClickListener listener) {
+        this.onGameClickListener = listener;
+    }
     public GameAdapter(List<Game> gameList) {
         this.gameList = gameList;
     }
@@ -39,6 +54,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.GameViewHolder
     @Override
     public void onBindViewHolder(@NonNull GameViewHolder holder, int position) {
         Game game = gameList.get(position);
+
         holder.tvName.setText(game.getName());
         holder.tvPlayers.setText(game.getMinPlayers() + " - " + game.getMaxPlayers() + " Players");
         holder.tvTime.setText(game.getAvgPlayTime() + " min");
@@ -51,10 +67,21 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.GameViewHolder
             holder.tvCategories.setText("No categories");
         }
 
-        // 3. חיבור הכפתור למאזין
         holder.btnDeleteGame.setOnClickListener(v -> {
             if (onDeleteClickListener != null) {
                 onDeleteClickListener.onDeleteClick(game);
+            }
+        });
+
+        // הגדרת לחיצה על כפתור העריכה
+        holder.btnEditGame.setOnClickListener(v -> {
+            if (onEditClickListener != null) {
+                onEditClickListener.onEditClick(game);
+            }
+        });
+        holder.itemView.setOnClickListener(v -> {
+            if (onGameClickListener != null) {
+                onGameClickListener.onGameClick(game);
             }
         });
     }
@@ -66,7 +93,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.GameViewHolder
 
     public static class GameViewHolder extends RecyclerView.ViewHolder {
         TextView tvName, tvPlayers, tvTime, tvDifficulty, tvCategories;
-        ImageButton btnDeleteGame;
+        ImageButton btnDeleteGame, btnEditGame;
 
         public GameViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -75,8 +102,9 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.GameViewHolder
             tvTime = itemView.findViewById(R.id.tvRowTime);
             tvDifficulty = itemView.findViewById(R.id.tvRowDifficulty);
             tvCategories = itemView.findViewById(R.id.tvRowCategories);
-            // 4. קישור הכפתור מה-XML
+
             btnDeleteGame = itemView.findViewById(R.id.btnDeleteGame);
+            btnEditGame = itemView.findViewById(R.id.btnEditGame);
         }
     }
 }

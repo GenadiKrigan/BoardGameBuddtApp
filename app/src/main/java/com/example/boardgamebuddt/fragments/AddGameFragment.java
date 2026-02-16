@@ -24,6 +24,7 @@ public class AddGameFragment extends Fragment {
     private TextInputEditText etName, etMinPlayer, etMaxPlayer, etBestPlayer, etAvgTime, etDifficulty, etRulesNote;
     private ChipGroup cgCategories;
     private SwitchMaterial swAlreadyPlayed;
+    private Game gameToEdit = null;
     private Button btAddGame;
     public AddGameFragment() {super(R.layout.fragment_add_game);}
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -39,6 +40,12 @@ public class AddGameFragment extends Fragment {
         swAlreadyPlayed = view.findViewById(R.id.swAlreadyPlayed);//bool
         btAddGame = view.findViewById(R.id.btnAddGameSave);
         btAddGame.setOnClickListener(v -> saveGame());
+        if (getArguments() != null && getArguments().containsKey("game_to_edit")) {
+            gameToEdit = (Game) getArguments().getSerializable("game_to_edit");
+            if (gameToEdit != null) {
+                fillFormForEdit(gameToEdit);
+            }
+        }
     }
 
     private void saveGame() {
@@ -49,28 +56,70 @@ public class AddGameFragment extends Fragment {
         String avgTime = etAvgTime.getText().toString().trim();
         String difficulty = etDifficulty.getText().toString().trim();
         String rulesNote = etRulesNote.getText().toString().trim();
-        if(name.isEmpty()||minPlayers.isEmpty()||maxPlayers.isEmpty()||avgTime.isEmpty()||difficulty.isEmpty()){
+
+        if (name.isEmpty() || minPlayers.isEmpty() || maxPlayers.isEmpty() || avgTime.isEmpty() || difficulty.isEmpty()) {
             Toast.makeText(getContext(), "Please fill all fields", Toast.LENGTH_SHORT).show();
             return;
         }
+
         int min = Integer.parseInt(minPlayers);
         int max = Integer.parseInt(maxPlayers);
         int best = bestPlayers.isEmpty() ? min : Integer.parseInt(bestPlayers);
         int avg = Integer.parseInt(avgTime);
         int diff = Integer.parseInt(difficulty);
+
         List<String> selectedCategories = new ArrayList<>();
-        for (int i = 0; i<cgCategories.getChildCount(); i++) {
-            Chip chip = (Chip) cgCategories.getChildAt(i);
-            if(chip.isChecked()){
-                selectedCategories.add(chip.getText().toString());
+        for (int i = 0; i < cgCategories.getChildCount(); i++) {
+            View child = cgCategories.getChildAt(i);
+            if (child instanceof Chip) {
+                Chip chip = (Chip) child;
+                if (chip.isChecked()) {
+                    selectedCategories.add(chip.getText().toString());
+                }
             }
         }
-        if (selectedCategories.isEmpty()){
+
+        if (selectedCategories.isEmpty()) {
             Toast.makeText(getContext(), "Please select at least one category", Toast.LENGTH_SHORT).show();
             return;
         }
-        Game game = new Game(null, name, min, max, best, avg, diff, selectedCategories, swAlreadyPlayed.isChecked(), rulesNote);
+
+        String firebaseId = (gameToEdit != null) ? gameToEdit.getFirebaseId() : null;
+        Game game = new Game(firebaseId, name, min, max, best, avg, diff, selectedCategories, swAlreadyPlayed.isChecked(), rulesNote);
+
         MainActivity mainActivity = (MainActivity) getActivity();
-        mainActivity.addGameToDB(game);
+        if (mainActivity != null) {
+            if (gameToEdit == null) {
+                mainActivity.addGameToDB(game);
+            } else {
+                mainActivity.updateGameInDB(game);
+            }
+        }
+    }
+    private void fillFormForEdit(Game game) {
+        etName.setText(game.getName());
+        etMinPlayer.setText(String.valueOf(game.getMinPlayers()));
+        etMaxPlayer.setText(String.valueOf(game.getMaxPlayers()));
+        etAvgTime.setText(String.valueOf(game.getAvgPlayTime()));
+        etDifficulty.setText(String.valueOf(game.getDifficulty()));
+        etRulesNote.setText(game.getRulesNote());
+        swAlreadyPlayed.setChecked(game.isUnplayed());
+
+        List<String> gameCategories = game.getCategories();
+        if (gameCategories != null) {
+            for (int i = 0; i < cgCategories.getChildCount(); i++) {
+                View child = cgCategories.getChildAt(i);
+                if (child instanceof Chip) {
+                    Chip chip = (Chip) child;
+                    if (gameCategories.contains(chip.getText().toString())) {
+                        chip.setChecked(true);
+                    } else {
+                        chip.setChecked(false);
+                    }
+                }
+            }
+        }
+
+        btAddGame.setText("Update Game"); //
     }
 }

@@ -83,6 +83,17 @@
             app:layout_constraintTop_toTopOf="parent"
             app:tint="@android:color/holo_red_dark"
             tools:ignore="SpeakableTextPresentCheck" />
+        <ImageButton
+            android:id="@+id/btnEditGame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="8dp"
+            android:src="@android:drawable/ic_menu_edit"
+            app:layout_constraintBottom_toBottomOf="@+id/btnDeleteGame"
+            app:layout_constraintEnd_toStartOf="@+id/btnDeleteGame"
+            app:layout_constraintTop_toTopOf="@+id/btnDeleteGame"
+            app:tint="?attr/colorPrimary" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

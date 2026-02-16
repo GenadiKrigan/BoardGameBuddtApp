@@ -121,4 +121,21 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
     }
+    public void updateGameInDB(Game game) {
+        String uid = mAuth.getCurrentUser().getUid();
+
+        DatabaseReference gamesRef = FirebaseDatabase.getInstance()
+                .getReference("users")
+                .child(uid)
+                .child("games");
+
+        gamesRef.child(game.getFirebaseId()).setValue(game)
+                .addOnSuccessListener(aVoid -> {
+                    Toast.makeText(this, "Game updated!", Toast.LENGTH_SHORT).show();
+                    getSupportFragmentManager().popBackStack();
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(this, "Failed to update game", Toast.LENGTH_SHORT).show();
+                });
+    }
 }

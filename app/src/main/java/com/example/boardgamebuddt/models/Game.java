@@ -3,7 +3,7 @@ package com.example.boardgamebuddt.models;
 import java.util.List;
 import java.util.ArrayList;
 
-public class Game {
+public class Game implements java.io.Serializable {
     private String firebaseId;
     private String name;
     private int minPlayers;

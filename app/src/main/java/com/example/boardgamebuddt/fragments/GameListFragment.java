@@ -57,6 +57,16 @@ public class GameListFragment extends Fragment {
         adapter.setOnDeleteClickListener(game -> {
             deleteGame(game);
         });
+        adapter.setOnEditClickListener(game -> {
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("game_to_edit", game);
+
+            androidx.navigation.Navigation.findNavController(view)
+                    .navigate(R.id.action_gameListFragment_to_addGameFragment, bundle);
+        });
+        adapter.setOnGameClickListener(game -> {
+            showGameDetailsDialog(game);
+        });
     }
 
     private void fetchGamesFromDB() {
@@ -95,6 +105,25 @@ public class GameListFragment extends Fragment {
                                     Toast.makeText(getContext(), "Failed to delete: " + e.getMessage(), Toast.LENGTH_SHORT).show());
                 })
                 .setNegativeButton("Cancel", null)
+                .show();
+    }
+    private void showGameDetailsDialog(Game game) {
+        StringBuilder details = new StringBuilder();
+        details.append("👥 Players: ").append(game.getMinPlayers()).append("-").append(game.getMaxPlayers());
+        if (game.getBestPlayers() > 0) details.append(" (Best: ").append(game.getBestPlayers()).append(")");
+        details.append("\n\n⏱ Time: ").append(game.getAvgPlayTime()).append(" min");
+        details.append("\n\n🧠 Difficulty: ").append(game.getDifficulty()).append("/5");
+        details.append("\n\n🏷 Categories: ").append(String.join(", ", game.getCategories()));
+        details.append("\n\n✅ Played: ").append(game.isUnplayed() ? "Yes" : "No");
+
+        if (game.getRulesNote() != null && !game.getRulesNote().isEmpty()) {
+            details.append("\n\n📝 Rules/Notes:\n").append(game.getRulesNote());
+        }
+
+        new android.app.AlertDialog.Builder(getContext())
+                .setTitle(game.getName())
+                .setMessage(details.toString())
+                .setPositiveButton("Close", null) // כפתור לסגירת החלונית
                 .show();
     }
 }

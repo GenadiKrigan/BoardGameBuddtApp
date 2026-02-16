@@ -8,8 +8,8 @@
         android:id="@+id/addGameFragment"
         android:icon="@drawable/add_game"
         android:title="Add Game" />
-    <item
-        android:id="@+id/statsFragment"
-        android:icon="@drawable/game_statistic"
-        android:title="Stats" />
+<!--    <item-->
+<!--        android:id="@+id/statsFragment"-->
+<!--        android:icon="@drawable/game_statistic"-->
+<!--        android:title="Stats" />-->
 </menu>
