@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             tools:text="Avg time"
-            app:layout_alignBaseline="@+id/tvRowPlayers"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tvRowPlayers"
             app:layout_constraintStart_toEndOf="@+id/tvRowPlayers"
             app:layout_constraintTop_toTopOf="@+id/tvRowPlayers" />
 

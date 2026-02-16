@@ -3,9 +3,11 @@ package com.example.boardgamebuddt.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.boardgamebuddt.MainActivity;
@@ -15,6 +17,7 @@ import com.google.android.material.textfield.TextInputEditText;
 public class RegisterFragment extends Fragment {
 
     private TextInputEditText etEmail, etPassword, etConfirmPassword, etUsername;
+    private TextView tvLoginRedirect;
 
     public RegisterFragment() {super(R.layout.fragment_register);}
 
@@ -26,6 +29,7 @@ public class RegisterFragment extends Fragment {
         etPassword = view.findViewById(R.id.etRegisterPassword);
         etConfirmPassword = view.findViewById(R.id.etConfromPassword);
         etUsername = view.findViewById(R.id.etRegisterUsername);
+        tvLoginRedirect = view.findViewById(R.id.tvLoginRedirect);
         btnCreateAccount = view.findViewById(R.id.btnCreateAccount);
         btnCreateAccount.setOnClickListener(v -> {
             String email = etEmail.getText().toString().trim();
@@ -48,6 +52,9 @@ public class RegisterFragment extends Fragment {
                     mainActivity.register(email, password, username);
                 }
             }
+        });
+        tvLoginRedirect.setOnClickListener(v -> {
+            Navigation.findNavController(v).navigate(R.id.action_registerFragment_to_loginFragment);
         });
     }
 }
