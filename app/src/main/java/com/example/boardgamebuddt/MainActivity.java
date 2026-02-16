@@ -26,6 +26,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
+    private NavController navController;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,10 +43,9 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.fragmentContainerView);
-        NavController navController = navHostFragment.getNavController();
+        navController = navHostFragment.getNavController();
         NavigationUI.setupWithNavController(bottomNav, navController);
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
-            // בודק אם היעד הנוכחי הוא מסך כניסה או הרשמה
             if (destination.getId() == R.id.loginFragment || destination.getId() == R.id.registerFragment) {
                 bottomNav.setVisibility(View.GONE);
             } else {
@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
         gamesRef.child(game.getFirebaseId()).setValue(game)
                 .addOnSuccessListener(aVoid -> {
                     Toast.makeText(this, "Game updated!", Toast.LENGTH_SHORT).show();
-                    getSupportFragmentManager().popBackStack();
+                    navController.popBackStack();
                 })
                 .addOnFailureListener(e -> {
                     Toast.makeText(this, "Failed to update game", Toast.LENGTH_SHORT).show();

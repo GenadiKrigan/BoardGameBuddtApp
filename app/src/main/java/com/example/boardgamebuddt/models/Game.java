@@ -31,7 +31,7 @@ public class Game implements java.io.Serializable {
         this.avgPlayTime = avgPlayTime;
         this.difficulty = difficulty;
         this.categories = categories != null ? categories : new ArrayList<>();
-        if(alreadyPlayed){
+        if(!alreadyPlayed){
             this.learningStatus = "Learn";
             this.isUnplayed = false;
         }
